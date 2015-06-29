@@ -11,8 +11,11 @@ import Parse
 import ConvenienceKit
 
 protocol TimelineQueryDelegate {
-
     func loadInRange(range: Range<Int>, completionBlock: ([Post]?) -> Void)
+}
+
+protocol ContentOffsetDelegate {
+    func didScrollTo(scrollOffset: CGPoint)
 }
 
 class TimelineTableViewController: UITableViewController, TimelineComponentTarget {
@@ -22,7 +25,7 @@ class TimelineTableViewController: UITableViewController, TimelineComponentTarge
     let additionalRangeSize = 5
     var timelineComponent: TimelineComponent<Post, TimelineTableViewController>!
     var timelineQueryDelegate: TimelineQueryDelegate?
-    
+    var scrollViewDelegate: ContentOffsetDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +61,10 @@ class TimelineTableViewController: UITableViewController, TimelineComponentTarge
         let indexPathOfTappedCell = tableView.indexPathForRowAtPoint(locationInTableView)
     }
     
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        scrollViewDelegate?.didScrollTo(tableView.contentOffset)
+    }
+    
 
 }
 
@@ -76,7 +83,7 @@ extension TimelineTableViewController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         if self.timelineComponent.content.count == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("EmptyCell") as! UITableViewCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("EmptyCell") as! UITableViewCell
             return cell
         }
         var cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! PostTableViewCell
@@ -113,5 +120,13 @@ extension TimelineTableViewController: UITableViewDelegate {
         }
         return 40
     }
+    
+   override  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if self.timelineComponent.content.count == 0 {
+            return tableView.frame.size.height
+        }
+        return 470
+    }
+    
     
 }

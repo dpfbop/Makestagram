@@ -23,7 +23,9 @@ class ProfileViewController: UIViewController, TimelineQueryDelegate {
     
     @IBOutlet weak var descriptionTextView: UITextView!
     
+    @IBOutlet weak var profileViewHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var spaceToProfileView: NSLayoutConstraint!
     var photoTakingHelper: PhotoTakingHelper?
     
     
@@ -66,8 +68,10 @@ class ProfileViewController: UIViewController, TimelineQueryDelegate {
         reloadProfilePicture()
         
         if !isCurrentUsersProfile() {
+            self.navigationItem.title = profile?.username.value
             self.navigationItem.rightBarButtonItem = nil
         } else {
+            self.navigationItem.title = "Your profile"
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: "logoutButtonPressed:")
         }
     }
@@ -130,8 +134,9 @@ class ProfileViewController: UIViewController, TimelineQueryDelegate {
     }
 
     @IBAction func logoutButtonPressed(sender: UIBarButtonItem) {
-        PFUser.logOut()
-        tabBarController?.selectedIndex = 0
+        let alertView = UIAlertView(title: "Logout", message: "Do you really want to logout?", delegate: self, cancelButtonTitle: "Cancel")
+        alertView.addButtonWithTitle("Yes")
+        alertView.show()
     }
 
     func isCurrentUsersProfile() -> Bool {
@@ -145,6 +150,7 @@ class ProfileViewController: UIViewController, TimelineQueryDelegate {
         if segue.identifier == "ProfileSegue" {
             if let destinationVC = segue.destinationViewController as? TimelineTableViewController {
                 destinationVC.timelineQueryDelegate = self
+                destinationVC.scrollViewDelegate = self
             }
         }
     }
@@ -160,6 +166,29 @@ class ProfileViewController: UIViewController, TimelineQueryDelegate {
         }
     }
     
+}
+
+extension ProfileViewController: ContentOffsetDelegate {
+    func didScrollTo(scrollOffset: CGPoint) {
+        let shift = max(200 - scrollOffset.y, 0)
+        if shift >= 195 {
+            profileViewHeightConstraint.constant = 200
+            println(shift)
+        } else {
+            println(shift)
+            profileViewHeightConstraint.constant = max(200 - scrollOffset.y, 0)
+        }
+//        spaceToProfileView.constant = max(-200, -scrollOffset.y)
+    }
+}
+
+extension ProfileViewController: UIAlertViewDelegate {
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if buttonIndex == 1 {
+                    PFUser.logOut()
+                    tabBarController?.selectedIndex = 0
+        }
+    }
 }
 
 func +(a: CGPoint, b: CGPoint) -> CGPoint {

@@ -43,15 +43,19 @@ class Profile {
         
         // if image is not downloaded yet, get it
         if (image.value == nil) {
-            
-            imageFile?.getDataInBackgroundWithBlock { (data: NSData?, error: NSError?) -> Void in
-                if let error = error {
-                    ErrorHandling.defaultErrorHandler(error)
-                }
-                if let data = data {
-                    let image = UIImage(data: data, scale:1.0)!
-                    self.image.value = image
-                    Profile.imageCache[self.imageFile!.name] = image
+            if imageFile == nil {
+                self.image.value = UIImage(named: "Profile")
+            }
+            else {
+                imageFile?.getDataInBackgroundWithBlock { (data: NSData?, error: NSError?) -> Void in
+                    if let error = error {
+                        ErrorHandling.defaultErrorHandler(error)
+                    }
+                    if let data = data {
+                        let image = UIImage(data: data, scale:1.0)!
+                        self.image.value = image
+                        Profile.imageCache[self.imageFile!.name] = image
+                    }
                 }
             }
         }

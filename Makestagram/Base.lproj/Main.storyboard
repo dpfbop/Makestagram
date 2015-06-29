@@ -134,11 +134,15 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Make School is awesome! " translatesAutoresizingMaskIntoConstraints="NO" id="1B8-7j-geO">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Make School is awesome! " selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1B8-7j-geO">
                                         <rect key="frame" x="206" y="55" width="386" height="136.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <gestureRecognizers/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="zqZ-cn-kDd" appends="YES" id="rGJ-JB-Ydr"/>
+                                        </connections>
                                     </textView>
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profile" translatesAutoresizingMaskIntoConstraints="NO" id="vwC-fR-s8v">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -204,6 +208,8 @@
                         <outlet property="activityView" destination="FPH-bH-eDG" id="fCM-5j-LCi"/>
                         <outlet property="descriptionTextView" destination="1B8-7j-geO" id="oe4-mf-a4f"/>
                         <outlet property="profilePicture" destination="vwC-fR-s8v" id="fvE-2Q-HgE"/>
+                        <outlet property="profileViewHeightConstraint" destination="sRM-fZ-qne" id="yhl-Ng-svu"/>
+                        <outlet property="spaceToProfileView" destination="MId-L9-b2h" id="PKO-T7-lEC"/>
                         <outlet property="usernameLabel" destination="tWb-Rd-got" id="lWX-dh-wdS"/>
                     </connections>
                 </viewController>
@@ -213,6 +219,7 @@
                         <action selector="profilePicturePressed:" destination="bKt-4C-xzW" id="arK-3u-6Uh"/>
                     </connections>
                 </tapGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="zqZ-cn-kDd"/>
             </objects>
             <point key="canvasLocation" x="1423" y="2049"/>
         </scene>
@@ -287,7 +294,7 @@
             <objects>
                 <tableViewController id="C9q-mA-DYx" userLabel="Timeline View Contoller" customClass="TimelineTableViewController" customModule="Makestagram" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="470" sectionHeaderHeight="22" sectionFooterHeight="22" id="LPW-dJ-lGb">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="287"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -570,7 +577,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="BZa-Qr-qcs"/>
-        <segue reference="FvA-ND-ox4"/>
+        <segue reference="ALr-iQ-Tjb"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.23529411764705882" green="0.63529411764705879" blue="0.88627450980392153" alpha="1" colorSpace="calibratedRGB"/>
 </document>
