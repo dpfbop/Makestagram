@@ -236,6 +236,7 @@
         <!--Timeline View Controller-->
         <scene sceneID="EU8-FV-757">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="456-lX-jZ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="qsY-Dg-jfY" userLabel="Timeline View Controller" customClass="TimelineViewController" customModule="Makestagram" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="96X-JJ-OHD"/>
@@ -407,12 +408,6 @@
                                                     <color key="textColor" red="0.23529411764705882" green="0.63529411764705879" blue="0.88627450980392153" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Qe-gf-viL">
-                                                    <rect key="frame" x="330" y="0.0" width="270" height="370"/>
-                                                    <connections>
-                                                        <segue destination="WNB-8k-Hpw" kind="embed" id="pNV-Mj-DCg"/>
-                                                    </connections>
-                                                </containerView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Tu8-i7-YaB" firstAttribute="top" secondItem="rss-8H-R3b" secondAttribute="bottom" constant="20" id="2nN-9I-IUV"/>
@@ -494,7 +489,6 @@
                         <outlet property="tableView" destination="AVd-9R-Toy" id="qwu-Ly-Qxe"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="456-lX-jZ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="517" y="-209"/>
         </scene>
@@ -560,25 +554,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rAN-SJ-09l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="517" y="1197"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="uYu-xN-o7f">
-            <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="WNB-8k-Hpw" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Wha-Ql-DMO"/>
-                        <viewControllerLayoutGuide type="bottom" id="iqu-vC-cug"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="VaX-Sv-F0L">
-                        <rect key="frame" x="0.0" y="0.0" width="270" height="370"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <toolbarItems/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BN8-Dm-vHL" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1036" y="-209"/>
         </scene>
     </scenes>
     <resources>
