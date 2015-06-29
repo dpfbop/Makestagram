@@ -16,17 +16,19 @@ class Profile {
     static var imageCache: NSCacheSwift<String, UIImage>!
     
     var username: Dynamic<String> = Dynamic("")
+    var user: PFUser!
     var image: Dynamic<UIImage?> = Dynamic(nil)
     var imageFile: PFFile?
     var once = true
     
     
-    init(username: String, imageFile: PFFile?) {
+    init(user: PFUser, imageFile: PFFile?) {
         if once {
             Profile.imageCache = NSCacheSwift<String, UIImage>()
             once = false
         }
-        self.username.value = username
+        self.username.value = user.username!
+        self.user = user
         self.imageFile = imageFile
     }
     

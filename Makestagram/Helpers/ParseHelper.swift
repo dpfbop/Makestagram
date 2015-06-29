@@ -57,6 +57,22 @@ class ParseHelper {
         query.findObjectsInBackgroundWithBlock(completionBlock)
     }
     
+    static func postsForUser(range: Range<Int>, user: PFUser, completionBlock: PFArrayResultBlock) {
+        let postsFromThisUser = Post.query()
+        postsFromThisUser!.whereKey(ParsePostUser, equalTo: user)
+        
+        let query = postsFromThisUser!
+        query.includeKey(ParsePostUser)
+        query.orderByDescending(ParsePostCreatedAt)
+        
+        // 2
+        query.skip = range.startIndex
+        // 3
+        query.limit = range.endIndex - range.startIndex
+        
+        query.findObjectsInBackgroundWithBlock(completionBlock)
+    }
+    
     static func likePost(user: PFUser, post: Post) {
         let likeObject = PFObject(className: ParseLikeClass)
         

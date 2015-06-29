@@ -11,33 +11,21 @@ import Parse
 import ConvenienceKit
 import ParseUI
 
-class TimelineViewController: UIViewController, TimelineComponentTarget {
+class RecentPhotosViewController: UIViewController, TimelineQueryDelegate {
     
     var photoTakingHelper: PhotoTakingHelper?
-    let defaultRange = 0...4
-    let additionalRangeSize = 5
-    var timelineComponent: TimelineComponent<Post, TimelineViewController>!
     var parseLoginHelper: ParseLoginHelper?
     
-    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         self.tabBarController?.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
         
-        timelineComponent = TimelineComponent(target: self)
         self.tabBarController?.delegate = self
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        timelineComponent.loadInitialIfRequired()
-    }
     
     override func viewWillAppear(animated: Bool) {
         if (PFUser.currentUser() == nil) {
@@ -88,10 +76,6 @@ class TimelineViewController: UIViewController, TimelineComponentTarget {
         
     }
     
-    @IBAction func doubleTapOnPhoto(sender: UITapGestureRecognizer) {
-        let locationInTableView = sender.locationInView(tableView)
-        let indexPathOfTappedCell = tableView.indexPathForRowAtPoint(locationInTableView)
-    }
     
 
     /*
@@ -104,12 +88,20 @@ class TimelineViewController: UIViewController, TimelineComponentTarget {
     }
     */
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "TimelineSegue" {
+            if let destinationVC = segue.destinationViewController as? TimelineTableViewController {
+                destinationVC.timelineQueryDelegate = self
+            }
+        }
+    }
+    
 }
 
 
 // MARK: Tab Bar Delegate
 
-extension TimelineViewController: UITabBarControllerDelegate {
+extension RecentPhotosViewController: UITabBarControllerDelegate {
     
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         if (viewController is PhotoViewController) {
@@ -121,57 +113,3 @@ extension TimelineViewController: UITabBarControllerDelegate {
     
 }
 
-extension TimelineViewController: UITableViewDataSource {
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if self.timelineComponent.content.count == 0 {
-            return 1
-        }
-        return self.timelineComponent.content.count
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-        if self.timelineComponent.content.count == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("EmptyCell") as! UITableViewCell
-            return cell
-        }
-        var cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! PostTableViewCell
-        
-        let post = timelineComponent.content[indexPath.section]
-        post.downloadImage()
-        post.fetchLikes()
-        cell.post = post
-        
-        return cell
-    }
-    
-}
-
-extension TimelineViewController: UITableViewDelegate {
-    
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        timelineComponent.targetWillDisplayEntry(indexPath.section)
-    }
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerCell = tableView.dequeueReusableCellWithIdentifier("PostHeader") as! PostSectionHeaderView
-        
-        let post = self.timelineComponent.content[section]
-        headerCell.post = post
-        
-        return headerCell
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if self.timelineComponent.content.count == 0 {
-            return 0
-        }
-        return 40
-    }
-    
-}

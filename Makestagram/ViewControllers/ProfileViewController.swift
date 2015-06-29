@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import Bond
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, TimelineQueryDelegate {
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var profilePicture: UIImageView!
@@ -39,7 +39,7 @@ class ProfileViewController: UIViewController {
     
         if profile == nil {
             if let curUser = PFUser.currentUser() {
-                self.profile = Profile(username: curUser.username!, imageFile: curUser["profilePicture"] as? PFFile)
+                self.profile = Profile(user: curUser, imageFile: curUser["profilePicture"] as? PFFile)
                 self.profile?.retrieveImage()
             }
         }
@@ -141,17 +141,25 @@ class ProfileViewController: UIViewController {
         return (profile?.username.value == PFUser.currentUser()!.username)
     }
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "ProfileSegue" {
+            if let destinationVC = segue.destinationViewController as? TimelineTableViewController {
+                destinationVC.timelineQueryDelegate = self
+            }
+        }
     }
-    */
-
+    
+    func loadInRange(range: Range<Int>, completionBlock: ([Post]?) -> Void) {
+        ParseHelper.postsForUser(range, user: self.profile!.user!) {
+            (result: [AnyObject]?, error: NSError?) -> Void in
+            if let error = error {
+                ErrorHandling.defaultErrorHandler(error)
+            }
+            let posts = result as? [Post] ?? []
+            completionBlock(posts)
+        }
+    }
+    
 }
 
 func +(a: CGPoint, b: CGPoint) -> CGPoint {

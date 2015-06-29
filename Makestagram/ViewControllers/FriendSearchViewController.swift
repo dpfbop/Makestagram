@@ -128,8 +128,7 @@ extension FriendSearchViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let user = users![indexPath.row]
         let imageFile = user["profilePicture"] as? PFFile
-        println(imageFile?.name)
-        selectedProfile = Profile(username: user.username!, imageFile: user["profilePicture"] as? PFFile)
+        selectedProfile = Profile(user: user, imageFile: user["profilePicture"] as? PFFile)
         self.performSegueWithIdentifier("openProfile", sender: self)
     }
 }
