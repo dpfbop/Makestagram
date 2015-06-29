@@ -19,6 +19,7 @@ protocol ContentOffsetDelegate {
 }
 
 class TimelineTableViewController: UITableViewController, TimelineComponentTarget {
+    @IBOutlet weak var headerView: UIView!
 
     
     let defaultRange = 0...4
@@ -26,10 +27,11 @@ class TimelineTableViewController: UITableViewController, TimelineComponentTarge
     var timelineComponent: TimelineComponent<Post, TimelineTableViewController>!
     var timelineQueryDelegate: TimelineQueryDelegate?
     var scrollViewDelegate: ContentOffsetDelegate?
+    var isProfile = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -37,6 +39,10 @@ class TimelineTableViewController: UITableViewController, TimelineComponentTarge
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         timelineComponent = TimelineComponent(target: self)
+        
+        if isProfile {
+            headerView.frame = CGRectMake(0, 0, 0, 200)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

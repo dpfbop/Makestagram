@@ -183,7 +183,6 @@ extension FriendSearchViewController: FriendSearchTableViewCellDelegate {
         ParseHelper.addFollowRelationshipFromUser(PFUser.currentUser()!, toUser: user)
         // update local cache
         followingUsers?.append(user)
-//        println(followingUsers)
     }
     
     func cell(cell: UserViewCell, didSelectUnfollowUser user: PFUser) {

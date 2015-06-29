@@ -151,6 +151,7 @@ class ProfileViewController: UIViewController, TimelineQueryDelegate {
             if let destinationVC = segue.destinationViewController as? TimelineTableViewController {
                 destinationVC.timelineQueryDelegate = self
                 destinationVC.scrollViewDelegate = self
+                destinationVC.isProfile = true
             }
         }
     }
@@ -171,14 +172,7 @@ class ProfileViewController: UIViewController, TimelineQueryDelegate {
 extension ProfileViewController: ContentOffsetDelegate {
     func didScrollTo(scrollOffset: CGPoint) {
         let shift = max(200 - scrollOffset.y, 0)
-        if shift >= 195 {
-            profileViewHeightConstraint.constant = 200
-            println(shift)
-        } else {
-            println(shift)
-            profileViewHeightConstraint.constant = max(200 - scrollOffset.y, 0)
-        }
-//        spaceToProfileView.constant = max(-200, -scrollOffset.y)
+        profileViewHeightConstraint.constant = max(200 - scrollOffset.y, 0)
     }
 }
 

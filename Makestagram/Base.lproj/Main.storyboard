@@ -125,6 +125,12 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sFQ-cU-IfI">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <connections>
+                                    <segue destination="C9q-mA-DYx" kind="embed" identifier="ProfileSegue" id="ALr-iQ-Tjb"/>
+                                </connections>
+                            </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgn-Oh-kMM" userLabel="Profile View">
                                 <rect key="frame" x="0.0" y="64" width="600" height="200"/>
                                 <subviews>
@@ -175,17 +181,11 @@
                                     <constraint firstItem="tWb-Rd-got" firstAttribute="leading" secondItem="vwC-fR-s8v" secondAttribute="trailing" constant="10" id="xcO-kx-qsP"/>
                                 </constraints>
                             </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sFQ-cU-IfI">
-                                <rect key="frame" x="0.0" y="264" width="600" height="287"/>
-                                <connections>
-                                    <segue destination="C9q-mA-DYx" kind="embed" identifier="ProfileSegue" id="ALr-iQ-Tjb"/>
-                                </connections>
-                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.23529411759999999" green="0.63529411759999999" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Hgn-Oh-kMM" firstAttribute="leading" secondItem="l0F-xP-B4a" secondAttribute="leading" id="8Ie-X7-anc"/>
-                            <constraint firstItem="sFQ-cU-IfI" firstAttribute="top" secondItem="Hgn-Oh-kMM" secondAttribute="bottom" id="MId-L9-b2h"/>
+                            <constraint firstItem="sFQ-cU-IfI" firstAttribute="top" secondItem="Hgn-Oh-kMM" secondAttribute="top" id="MId-L9-b2h"/>
                             <constraint firstItem="Hgn-Oh-kMM" firstAttribute="top" secondItem="iLY-E9-NyH" secondAttribute="bottom" id="NLH-pT-itY"/>
                             <constraint firstItem="bAX-NG-UUR" firstAttribute="leading" secondItem="l0F-xP-B4a" secondAttribute="leading" id="Pwi-eH-5FL"/>
                             <constraint firstItem="7eY-Tj-tm7" firstAttribute="top" secondItem="bAX-NG-UUR" secondAttribute="bottom" id="T2N-Tf-Oxc"/>
@@ -294,9 +294,14 @@
             <objects>
                 <tableViewController id="C9q-mA-DYx" userLabel="Timeline View Contoller" customClass="TimelineTableViewController" customModule="Makestagram" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="470" sectionHeaderHeight="22" sectionFooterHeight="22" id="LPW-dJ-lGb">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="287"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="dGb-8G-cyJ">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostHeader" rowHeight="30" id="54c-cx-Fcx" customClass="PostSectionHeaderView" customModule="Makestagram" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -494,6 +499,9 @@
                             <outlet property="delegate" destination="C9q-mA-DYx" id="U1R-SF-oxL"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="headerView" destination="dGb-8G-cyJ" id="olR-At-1o3"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aVf-lD-ylF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
